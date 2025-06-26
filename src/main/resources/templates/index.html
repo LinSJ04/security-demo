@@ -1,0 +1,13 @@
+<!--thymeleaf动态语法-->
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Hello Security!</title>
+</head>
+<body>
+<h1>Hello Security</h1>
+<!--动态标签 可以自动获取相对路径-->
+<a th:href="@{/logout}">Log Out 1</a>
+<!--非动态标签-->
+<a href="/logout">Log Out 2</a>
+</body>
+</html>
