@@ -21,20 +21,26 @@ public class WebSecurityConfig {
 		//authorizeRequests()：开启授权保护 用户认证
 		//anyRequest()：对所有请求开启授权保护
 		//authenticated()：已认证请求会自动被授权
+		// 授权配置
 		http
 				// 开启授权保护
-				.authorizeRequests(authorize -> authorize.anyRequest().authenticated())
+				.authorizeRequests(authorize -> authorize.anyRequest().authenticated());
 				// 默认的登录表单和默认的登出页面
-				.formLogin( form -> {
-					form
-							.loginPage("/login").permitAll() //登录页面无需授权即可访问
-							.usernameParameter("username") //自定义表单用户名参数，默认是username
-							.passwordParameter("password") //自定义表单密码参数，默认是password
-							.failureUrl("/login?error") //登录失败的返回地址，默认是error
-							.successHandler(new MyAuthenticationSuccessHandler()) // 认证成功时的处理
-							.failureHandler(new MyAuthenticationFailureHandler()) // 认证失败时的处理
-					;
-				}); //表单授权方式
+		// 登录配置
+		http.formLogin( form -> {
+			form
+					.loginPage("/login").permitAll() //登录页面无需授权即可访问
+					.usernameParameter("username") //自定义表单用户名参数，默认是username
+					.passwordParameter("password") //自定义表单密码参数，默认是password
+					.failureUrl("/login?error") //登录失败的返回地址，默认是error
+					.successHandler(new MyAuthenticationSuccessHandler()) // 认证成功时的处理
+					.failureHandler(new MyAuthenticationFailureHandler()) // 认证失败时的处理
+			;
+		}); //表单授权方式
+		// 注销配置
+		http.logout(logout -> {
+			logout.logoutSuccessHandler(new MyLogoutSuccessHandler()); //注销成功时的处理
+		});
 				// 浏览器自带的登录框，没有登录表单，没有默认的登出页 一般不使用
 //				.httpBasic(withDefaults());//基本授权方式
 
