@@ -29,6 +29,11 @@ public class WebSecurityConfig {
 				// 浏览器自带的登录框，没有登录表单，没有默认的登出页 一般不使用
 //				.httpBasic(withDefaults());//基本授权方式
 
+		// 关闭csrf攻击防御 方便测试
+		// .../demo/doc.html
+		http.csrf((csrf) -> {
+			csrf.disable(); // 需要前端提供
+		});
 		return http.build();
 	}
 
