@@ -32,6 +32,7 @@ public class WebSecurityConfig {
 							.passwordParameter("password") //自定义表单密码参数，默认是password
 							.failureUrl("/login?error") //登录失败的返回地址，默认是error
 							.successHandler(new MyAuthenticationSuccessHandler()) // 认证成功时的处理
+							.failureHandler(new MyAuthenticationFailureHandler()) // 认证失败时的处理
 					;
 				}); //表单授权方式
 				// 浏览器自带的登录框，没有登录表单，没有默认的登出页 一般不使用
