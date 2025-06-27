@@ -52,6 +52,7 @@ public class WebSecurityConfig {
 		//错误处理
 		http.exceptionHandling(exception  -> {
 			exception.authenticationEntryPoint(new MyAuthenticationEntryPoint());//请求未认证的接口
+			exception.accessDeniedHandler(new MyAccessDeniedHandler()); //请求未授权的接口
 		});
 				// 浏览器自带的登录框，没有登录表单，没有默认的登出页 一般不使用
 //				.httpBasic(withDefaults());//基本授权方式
