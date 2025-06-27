@@ -24,7 +24,12 @@ public class WebSecurityConfig {
 		// 授权配置
 		http
 				// 开启授权保护
-				.authorizeRequests(authorize -> authorize.anyRequest().authenticated());
+				.authorizeRequests(authorize -> authorize
+						//具有USER_LIST权限的用户可以访问/user/list
+						.requestMatchers("/user/list").hasAuthority("USER_LIST")
+						//具有USER_ADD权限的用户可以访问/user/add
+						.requestMatchers("/user/add").hasAuthority("USER_ADD")
+						.anyRequest().authenticated());
 				// 默认的登录表单和默认的登出页面
 
 		// 登录配置
@@ -59,6 +64,13 @@ public class WebSecurityConfig {
 
 		//跨域
 		http.cors(withDefaults());
+
+		//会话管理
+		http.sessionManagement(session -> {
+			session
+					.maximumSessions(1) // 允许的最大会话数量
+					.expiredSessionStrategy(new MySessionInformationExpiredStrategy());
+		});
 
 		return http.build();
 	}
