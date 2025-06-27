@@ -25,10 +25,12 @@ public class WebSecurityConfig {
 		http
 				// 开启授权保护
 				.authorizeRequests(authorize -> authorize
-						//具有USER_LIST权限的用户可以访问/user/list
-						.requestMatchers("/user/list").hasAuthority("USER_LIST")
-						//具有USER_ADD权限的用户可以访问/user/add
-						.requestMatchers("/user/add").hasAuthority("USER_ADD")
+//						//具有USER_LIST权限的用户可以访问/user/list
+//						.requestMatchers("/user/list").hasAuthority("USER_LIST")
+//						//具有USER_ADD权限的用户可以访问/user/add
+//						.requestMatchers("/user/add").hasAuthority("USER_ADD")
+						//具有管理员角色的用户可以访问/user/**
+						.requestMatchers("/user/**").hasRole("ADMIN")
 						.anyRequest().authenticated());
 				// 默认的登录表单和默认的登出页面
 
