@@ -63,6 +63,8 @@ public class DBUserDetailsManager implements UserDetailsManager, UserDetailsPass
                     .withUsername(user.getUsername())
                     .password(user.getPassword())
                     .roles("ADMIN")
+                    // 注意权限配置在后面，会覆盖角色配置
+//                    .authorities("USER_ADD", "USER_UPDATE") // 需要用数组的形式来写，如果分开写后者会覆盖前者
                     .build();
         }
     }

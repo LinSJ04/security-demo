@@ -2,6 +2,7 @@ package com.example.securitydemo.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -13,6 +14,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 // @EnableWebSecurity // 开启SpringSecurity的自定义配置(在SpringBoot项目中可省略)
+@EnableMethodSecurity // 开启基于方法的授权
 public class WebSecurityConfig {
 
 	// 默认配置(可省)
@@ -30,7 +32,7 @@ public class WebSecurityConfig {
 //						//具有USER_ADD权限的用户可以访问/user/add
 //						.requestMatchers("/user/add").hasAuthority("USER_ADD")
 						//具有管理员角色的用户可以访问/user/**
-						.requestMatchers("/user/**").hasRole("ADMIN")
+//						.requestMatchers("/user/**").hasRole("ADMIN")
 						.anyRequest().authenticated());
 				// 默认的登录表单和默认的登出页面
 
