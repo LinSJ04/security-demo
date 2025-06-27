@@ -26,6 +26,7 @@ public class WebSecurityConfig {
 				// 开启授权保护
 				.authorizeRequests(authorize -> authorize.anyRequest().authenticated());
 				// 默认的登录表单和默认的登出页面
+
 		// 登录配置
 		http.formLogin( form -> {
 			form
@@ -37,9 +38,15 @@ public class WebSecurityConfig {
 					.failureHandler(new MyAuthenticationFailureHandler()) // 认证失败时的处理
 			;
 		}); //表单授权方式
+
 		// 注销配置
 		http.logout(logout -> {
 			logout.logoutSuccessHandler(new MyLogoutSuccessHandler()); //注销成功时的处理
+		});
+
+		//错误处理
+		http.exceptionHandling(exception  -> {
+			exception.authenticationEntryPoint(new MyAuthenticationEntryPoint());//请求未认证的接口
 		});
 				// 浏览器自带的登录框，没有登录表单，没有默认的登出页 一般不使用
 //				.httpBasic(withDefaults());//基本授权方式
@@ -49,6 +56,10 @@ public class WebSecurityConfig {
 		http.csrf((csrf) -> {
 			csrf.disable(); // 需要前端提供
 		});
+
+		//跨域
+		http.cors(withDefaults());
+
 		return http.build();
 	}
 
