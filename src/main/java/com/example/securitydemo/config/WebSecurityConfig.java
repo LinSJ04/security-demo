@@ -25,7 +25,15 @@ public class WebSecurityConfig {
 				// 开启授权保护
 				.authorizeRequests(authorize -> authorize.anyRequest().authenticated())
 				// 默认的登录表单和默认的登出页面
-				.formLogin(withDefaults());//表单授权方式
+				.formLogin( form -> {
+					form
+							.loginPage("/login").permitAll() //登录页面无需授权即可访问
+							.usernameParameter("username") //自定义表单用户名参数，默认是username
+							.passwordParameter("password") //自定义表单密码参数，默认是password
+							.failureUrl("/login?error") //登录失败的返回地址，默认是error
+							.successHandler(new MyAuthenticationSuccessHandler()) // 认证成功时的处理
+					;
+				}); //表单授权方式
 				// 浏览器自带的登录框，没有登录表单，没有默认的登出页 一般不使用
 //				.httpBasic(withDefaults());//基本授权方式
 
